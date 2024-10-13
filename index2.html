@@ -1,63 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Maps Example</title>
+    <title>Google Maps Integration</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmUoMGb3kvB9nHWQS4bPf-QS_MjWNvKkY"></script>
     <style>
         #map {
-            height: 500px; /* Set the height of the map */
-            width: 100%;   /* Set the width of the map */
+            height: 400px;
+            width: 100%;
         }
     </style>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmUoMGb3kvB9nHWQS4bPf-QS_MjWNvKkY&callback=initMap" async defer></script>
 </head>
 <body>
+    <h1>Google Maps Integration</h1>
+    <div id="map"></div>
+    <script>
+        function initMap() {
+            const vnit = { lat: 21.1232, lng: 79.0515 }; // Set coordinates for VNIT
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 15,
+                center: vnit,
+            });
+            const marker = new google.maps.Marker({
+                position: vnit,
+                map: map,
+                title: "VNIT",
+            });
+        }
 
-<h3>My Google Map with Markers</h3>
-<div id="map"></div>
-
-<script>
-    let map;
-    let markers = [];
-
-    function initMap() {
-        // Create the map centered at VNIT
-        map = new google.maps.Map(document.getElementById("map"), {
-            center: { lat: 21.1459, lng: 79.0882 }, // Coordinates of VNIT
-            zoom: 15,
-        });
-
-        // Add a marker for VNIT
-        addMarker({ lat: 21.1459, lng: 79.0882 }, 'VNIT', 'https://path/to/custom/icon.png');
-
-        // Add click event to add new markers
-        map.addListener("click", (event) => {
-            addMarker(event.latLng);
-        });
-    }
-
-    function addMarker(location, title = '', icon = 'https://path/to/default/icon.png') {
-        const marker = new google.maps.Marker({
-            position: location,
-            map: map,
-            title: title,
-            icon: icon, // Custom icon URL
-        });
-
-        // Add an info window
-        const infoWindow = new google.maps.InfoWindow({
-            content: `<h4>${title}</h4>`, // Title for the info window
-        });
-
-        // Show the info window on marker click
-        marker.addListener("click", () => {
-            infoWindow.open(map, marker);
-        });
-
-        markers.push(marker); // Store marker for future reference
-    }
-</script>
-
+        // Initialize the map
+        window.onload = initMap;
+    </script>
 </body>
 </html>
